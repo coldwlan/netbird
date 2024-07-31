@@ -72,7 +72,7 @@ jobs:
         if: github.event_name != 'pull_request'
         uses: docker/login-action@v1
         with:
-          username: netbirdio
+          username: uniclan
           password: ${{ secrets.DOCKER_TOKEN }}
       - name: Install OS build dependencies
         run: sudo apt update && sudo apt install -y -q gcc-arm-linux-gnueabihf gcc-aarch64-linux-gnu
@@ -95,9 +95,9 @@ jobs:
           args: release --rm-dist ${{ env.flags }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          HOMEBREW_TAP_GITHUB_TOKEN: ${{ secrets.HOMEBREW_TAP_GITHUB_TOKEN }}
-          UPLOAD_DEBIAN_SECRET: ${{ secrets.PKG_UPLOAD_SECRET }}
-          UPLOAD_YUM_SECRET: ${{ secrets.PKG_UPLOAD_SECRET }}
+          #HOMEBREW_TAP_GITHUB_TOKEN: ${{ secrets.HOMEBREW_TAP_GITHUB_TOKEN }}
+          #UPLOAD_DEBIAN_SECRET: ${{ secrets.PKG_UPLOAD_SECRET }}
+          #UPLOAD_YUM_SECRET: ${{ secrets.PKG_UPLOAD_SECRET }}
       -
         name: upload non tags for debug purposes
         uses: actions/upload-artifact@v3
@@ -178,10 +178,10 @@ jobs:
           version: ${{ env.GORELEASER_VER }}
           args: release --config .goreleaser_ui.yaml --rm-dist ${{ env.flags }}
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          HOMEBREW_TAP_GITHUB_TOKEN: ${{ secrets.HOMEBREW_TAP_GITHUB_TOKEN }}
-          UPLOAD_DEBIAN_SECRET: ${{ secrets.PKG_UPLOAD_SECRET }}
-          UPLOAD_YUM_SECRET: ${{ secrets.PKG_UPLOAD_SECRET }}
+          GITHUB_TOKEN: ${{ secrets.SIGN_GITHUB_TOKEN }}
+          #HOMEBREW_TAP_GITHUB_TOKEN: ${{ secrets.HOMEBREW_TAP_GITHUB_TOKEN }}
+          #UPLOAD_DEBIAN_SECRET: ${{ secrets.PKG_UPLOAD_SECRET }}
+          #UPLOAD_YUM_SECRET: ${{ secrets.PKG_UPLOAD_SECRET }}
       - name: upload non tags for debug purposes
         uses: actions/upload-artifact@v3
         with:
@@ -229,7 +229,7 @@ jobs:
           version: ${{ env.GORELEASER_VER }}
           args: release --config .goreleaser_ui_darwin.yaml --rm-dist ${{ env.flags }}
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.SIGN_GITHUB_TOKEN }}
       -
         name: upload non tags for debug purposes
         uses: actions/upload-artifact@v3
